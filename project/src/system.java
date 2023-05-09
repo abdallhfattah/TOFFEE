@@ -21,7 +21,7 @@ public class system extends User {
         }
         if (!registered) {
             try {
-                FileWriter writer = new FileWriter("users.csv", true);
+                FileWriter writer = new FileWriter("bin/users.csv", true);
                 writer.write(newUser.getUsername() + "," + newUser.getPassword() + "\n");
                 writer.close();
                 System.out.println("User registered successfully!");
