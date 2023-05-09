@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
-public class system extends User {
+public class system {
     public static void Register() {
         boolean registered = false;
         Scanner scan = new Scanner(System.in);
@@ -11,7 +11,7 @@ public class system extends User {
         System.out.println("Enter password:");
         String password = scan.nextLine();
         User newUser = new User(username, password);
-        ArrayList<User> users = loadUsers();
+        ArrayList<User> users = User.loadUsers();
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 registered = true;
@@ -36,7 +36,7 @@ public class system extends User {
         String username = scan.nextLine();
         System.out.println("Enter password:");
         String password = scan.nextLine();
-        ArrayList<User> users = loadUsers();
+        ArrayList<User> users = User.loadUsers();
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 System.out.println("welcome back " + user.getUsername() + " (^V^)");
