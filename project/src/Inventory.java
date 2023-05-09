@@ -103,7 +103,7 @@ public class Inventory {
     public static void main(String[] args) {
         // Create a new inventory
         Inventory inventory = new Inventory();
-        System.out.println(System.getProperty("user.dir"));
+        // System.out.println(Paths.get(System.getProperty("user.dir"), "Desktop", "soft-assignment", "TOFFEE", "project", "src", "data"));    
         // Add some items to the inventory
         Item item1 = new Item(1, "Toffe", "sweets", 29.99, "fluffy candy", 10,true);
         Item item2 = new Item(2, "Moltossss", "bakery", 9.99, "just molto ", 5,false);
