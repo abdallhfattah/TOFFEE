@@ -11,11 +11,17 @@ public class Cart {
     private Inventory inventory;
 
     public void saveCart() {
-        if (items.isEmpty()) return;
+        if (items.isEmpty()) {
+            System.out.println("list empty");
+            return;
+        }
 
         try {
-            Path path = Paths.get(System.getProperty("user.home"), "Desktop", "TOFFEE", "project", "src", "data");
-            File file = new File(path.toFile(), "cartsomar.csv");
+//            Path path = Paths.get(System.getProperty("user.home"), "Desktop", "TOFFEE", "project", "src", "data");
+            String path = "/src/data";
+
+            System.out.println(path);
+            File file = new File(path, String.format("cart%s.csv", user.getUsername()));
             FileWriter writer = new FileWriter(file.getPath(), true);
             for (Item item: items) {
                 writer.write(item.getId() + "," + item.getName() + "," + item.getCategory() + "," + item.getPrice()
@@ -102,7 +108,7 @@ public class Cart {
         inventory.addItem(item4);
         inventory.saveItemsToCSV();
 
-        User user = new User("Omar", "1234");
+        User user = new User("khaled", "1234");
         Cart cart = new Cart(user, inventory);
         cart.addItem("T1");
         cart.addItem("M1");

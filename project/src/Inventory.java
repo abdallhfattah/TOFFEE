@@ -25,7 +25,7 @@ public class Inventory {
     }
 
     public void displayItems() {
-        Path path = Paths.get(System.getProperty("user.home"), "Desktop", "soft-assignment", "TOFFEE", "project", "src", "data");
+        Path path = Paths.get(System.getProperty("user.home"), "Desktop", "TOFFEE", "project", "src", "data");
         File file = new File(path.toFile(), "items.csv");
         try (Scanner scanner = new Scanner(new File(file.getPath()))) {
             scanner.nextLine(); // Skip first line containing column headers
@@ -60,7 +60,7 @@ public class Inventory {
         try {
             // Read existing items from CSV file and store them in a HashSet
             Set<String> existingItems = new HashSet<>();
-            Path path = Paths.get(System.getProperty("user.home"), "Desktop", "soft-assignment", "TOFFEE", "project", "src", "data");
+            Path path = Paths.get(System.getProperty("user.home"), "Desktop", "TOFFEE", "project", "src", "data");
             File file = new File(path.toFile(), "items.csv");
             if (file.exists()) {
                 try (Scanner scanner = new Scanner(new File(file.getPath()))) {
