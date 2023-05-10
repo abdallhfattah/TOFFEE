@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,19 +8,15 @@ public class Cart {
     private ArrayList<Item> items;
     private Inventory inventory;
 
-    public void saveCart() {
+    private void saveCart() {
         if (items.isEmpty()) {
             System.out.println("list empty");
             return;
         }
 
         try {
-//            Path path = Paths.get(System.getProperty("user.home"), "Desktop", "TOFFEE", "project", "src", "data");
-            String path = "/src/data";
-
-            System.out.println(path);
-            File file = new File(path, String.format("cart%s.csv", user.getUsername()));
-            FileWriter writer = new FileWriter(file.getPath(), true);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./src/data/cartFor%s.csv"
+                    , user.getUsername()), true));
             for (Item item: items) {
                 writer.write(item.getId() + "," + item.getName() + "," + item.getCategory() + "," + item.getPrice()
                         + "," + item.getDescription() + "," + item.getLoyaltyPoints() + "," + item.isInStock() + "\n");
@@ -49,19 +43,30 @@ public class Cart {
         if (item != null) {
             items.add(item);
         }
+        saveCart();
     }
 
     public void removeItem(String itemName) {
-        Item itemToRemove = null;
-        for (Item item : items) {
-            if (item.getName().equals(itemName)) {
-                itemToRemove = item;
-                break;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(String.format("./src/data/cartFor%s.csv",
+                    user.getUsername())));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line.contains(itemName));
             }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if (itemToRemove != null) {
-            items.remove(itemToRemove);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./src/data/cartFor%s.csv",
+                    user.getUsername())));
+            writer.
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        saveCart();
     }
 
     public void clearCart() {
@@ -108,12 +113,13 @@ public class Cart {
         inventory.addItem(item4);
         inventory.saveItemsToCSV();
 
-        User user = new User("khaled", "1234");
+        User user = new User("test", "1234");
         Cart cart = new Cart(user, inventory);
-        cart.addItem("T1");
-        cart.addItem("M1");
+        cart.removeItem("M1");
+//        cart.addItem("M1");
+//        cart.addItem("C1");
+//        cart.addItem("M1");
 //        cart.addItem("cup cake");
 //        cart.addItem("wwala333");
-        cart.saveCart();
     }
 }
