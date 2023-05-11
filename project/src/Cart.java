@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -42,31 +43,41 @@ public class Cart {
         Item item = inventory.getItemByName(itemName);
         if (item != null) {
             items.add(item);
+            saveCart();
+            items.clear();
         }
-        saveCart();
     }
 
     public void removeItem(String itemName) {
+        ArrayList<String> lines = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(String.format("./src/data/cartFor%s.csv",
                     user.getUsername())));
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line.contains(itemName));
+                if (!line.contains(itemName)) {
+                    lines.add(line);
+                }
             }
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./src/data/cartFor%s.csv",
                     user.getUsername())));
-            writer.
+            for (String l: lines) {
+                if (!l.isEmpty()) {
+                    writer.write(l + '\n');
+                }
+            }
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        saveCart();
+        System.out.println("item is removed successfully!");
     }
 
     public void clearCart() {
@@ -115,10 +126,11 @@ public class Cart {
 
         User user = new User("test", "1234");
         Cart cart = new Cart(user, inventory);
-        cart.removeItem("M1");
-//        cart.addItem("M1");
-//        cart.addItem("C1");
-//        cart.addItem("M1");
+//        cart.removeItem("M1");
+//        cart.removeItem("c1");
+        cart.addItem("M1");
+        cart.addItem("c1");
+        cart.addItem("M1");
 //        cart.addItem("cup cake");
 //        cart.addItem("wwala333");
     }
