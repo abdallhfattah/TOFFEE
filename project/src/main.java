@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.io.File;
 public class main {
   public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
@@ -8,9 +7,8 @@ public class main {
       System.out.println("1. Register");
       System.out.println("2. Log in");
       System.out.println("3. Exit");
-
       int choice = scan.nextInt();
-
+      scan.close();
       switch (choice) {
         case 1:
           system.Register();
