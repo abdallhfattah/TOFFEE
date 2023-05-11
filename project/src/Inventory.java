@@ -97,7 +97,7 @@ public class Inventory {
         }
     }
 
-    public void loadItemsFromCSV() {
+    public ArrayList<Item> loadItemsFromCSV() {
     try {
         File file = new File("./data", "items.csv");
         if (file.exists()) {
@@ -122,7 +122,8 @@ public class Inventory {
     } catch (IOException e) {
         System.out.println("Error loading items from CSV file: " + e.getMessage());
     }
-}
+    return itemList;
+    }
 
     
     public static void main(String[] args) {

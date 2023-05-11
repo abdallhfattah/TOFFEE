@@ -9,6 +9,7 @@ public class main {
       System.out.println("1. Register");
       System.out.println("2. Log in");
       System.out.println("3. Exit");
+      System.out.print("Enter your choice: ");
       int choice = scan_choice.nextInt();
       switch (choice) {
         case 1:

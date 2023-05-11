@@ -1,12 +1,15 @@
-import java.util.function.DoubleToIntFunction;
+import java.util.Scanner;
+import java.io.*;
 
 public class Checkout {
     private Cart cart;
     private final double total;
+    private User cart_user;
     private boolean is_delivered;
 
-    public Checkout(Cart c) {
+    public Checkout(Cart c  , User user) {
         cart = c;
+        cart_user = user;
         total = c.getTotalPrice();
         is_delivered = false;
     }
@@ -19,40 +22,90 @@ public class Checkout {
         System.out.println(is_delivered ? "delivered" : "out for delivery!");
     }
 
-    public void payCash(double amount) {
+    // paying cash
+    public boolean payCash(double amount) {
+        is_delivered = false;
         if (amount == total) {
             System.out.println("here is your order!\nHave a nice day!");
             is_delivered = true;
         }
         else if (amount > total) {
             amount -= total;
-            System.out.printf("Here is your change: %.2f\nhere is your order!\nHave a nice day!", amount);
+            System.out.printf("Here is your change: %.2f\nhere is your order!\nHave a nice day!\n", amount);
             is_delivered = true;
         }
         else {
-            System.out.printf("The Total is: %.2f\nYou only paid: %.2f", total, amount);
+            System.out.printf("The Total is: %.2f\nYou only paid: %.2f\n", total, amount);
+        }
+        return is_delivered;
+    }
+    // check out management
+    public void checkOut(User user){
+        Scanner scan = new Scanner(System.in);
+        while (true) {
+            LineBreaker();
+            System.out.println("1-Payment info\n2-PayCash\n3-exit");
+            System.out.print("CHOICE: ");
+            int choice = scan.nextInt();
+        switch (choice) {
+            case 1:
+                LineBreaker();
+                System.out.println("Here is the your info!");
+                System.out.println(String.format("shipping address %s: ", user.getAddress()));
+                System.out.println(String.format("Amount to Pay: %.2f $", total));
+                System.out.println(String.format("Approximate time to delivery: %s ", estimateDeliveryTime(total)));
+                break;
+            case 2:
+                LineBreaker();
+                System.out.print("Enter the amount to pay: ");
+                double amount = scan.nextDouble();
+                payCash(amount);
+                if(is_delivered){
+                    flushCart();
+                    System.out.println("Thank you for shopping with us!");
+                }
+                return;
+            case 3:
+                return;
+            default:
+                System.out.println("Invalid choice. Please be smarter.");
+                break;
+        }
+    }
+    }
+    // estimated time to deliver
+    public static String estimateDeliveryTime(double amountPaid) {
+        double deliveryTimeInDays = 5 - (amountPaid / 1000);
+        if (deliveryTimeInDays < 2) {
+            deliveryTimeInDays = 2;
+        } else if (deliveryTimeInDays > 5) {
+            deliveryTimeInDays = 5;
+        }
+    
+        int days = (int) deliveryTimeInDays;
+        int hours = (int) ((deliveryTimeInDays - days) * 24);
+    
+        if (hours > 0) {
+            return days + " days, " + hours + " hours";
+        } else {
+            return days + " days";
         }
     }
 
-    public static void main(String[] args) {
-        // Create a new inventory
-        Inventory inventory = new Inventory();
+    // deleting items from cart
+    public void flushCart(){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./data/cart_For_%s.csv",
+        cart_user.getUsername()), false));){
+                writer.write(""); // flush the cart
+                writer.close();
+        } catch (IOException e) {
+            System.out.println("Operation Failed please try again! \n");
+            e.printStackTrace();
+        }
+    }
 
-        // Add some items to the inventory
-        Item item1 = new Item(1, "Toffe", "sweets", 29.99, "fluffy candy", 10,true);
-        Item item2 = new Item(2, "Molto", "bakery", 9.99, "just molto ", 5,false);
-        Item item3 = new Item(2, "cup cake", "bakery", 14.99, "cup cake", 5,true);
-        Item item4 = new Item(2, "gums", "bakery", 4.99, "gums", 0,true);
-        inventory.addItem(item1);
-        inventory.addItem(item2);
-        inventory.addItem(item3);
-        inventory.addItem(item4);
-        // Cart c = new Cart(inventory);
-        // c.addItem("Toffe");
-        // c.addItem("Molto");
-        // c.addItem("gums");
-        // Checkout check = new Checkout(c);
-        // check.payCash(44.97);
+    public static void LineBreaker(){
+        System.out.println("=====================================================");
     }
 
 }
