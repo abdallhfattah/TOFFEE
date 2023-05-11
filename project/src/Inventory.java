@@ -28,30 +28,30 @@ public class Inventory {
         Path path = Paths.get(System.getProperty("user.home"), "Desktop", "TOFFEE", "project", "src", "data");
         File file = new File(path.toFile(), "items.csv");
         try (Scanner scanner = new Scanner(new File(file.getPath()))) {
-            scanner.nextLine(); // Skip first line containing column headers
+            BufferedReader reader = new BufferedReader(new FileReader("./src/data/items.csv"));
+            reader.readLine(); // Skip first line containing column headers
             System.out.println("+----+----------------+----------------+----------+------------------------+-----------------+--------+");
             System.out.println("| ID |      Name      |    Category    |  Price   |       Description      | Loyalty Points  |In Stock|");
             System.out.println("+----+----------------+----------------+----------+------------------------+-----------------+--------+");
-    
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Scanner lineScanner = new Scanner(line);
-                lineScanner.useDelimiter(",");
-                int id = lineScanner.nextInt();
-                String name = lineScanner.next();
-                String category = lineScanner.next();
-                double price = lineScanner.nextDouble();
-                String description = lineScanner.next();
-                int loyaltyPoints = lineScanner.nextInt();
-                boolean inStock = lineScanner.next().equalsIgnoreCase("Yes");
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(",");
+
+                int id = Integer.parseInt(row[0]);
+                String name = row[1];
+                String category = row[2];
+                double price = Double.parseDouble(row[3]);
+                String description = row[4];
+                int loyaltyPoints = Integer.parseInt(row[5]);
+                boolean inStock = Boolean.parseBoolean(row[6]);
     
                 System.out.format("| %2d | %-14s | %-14s | $%7.2f | %-22s | %15d | %6s |\n",
                         id, name, category, price, description, loyaltyPoints, inStock ? "Yes" : "No");
             }
     
             System.out.println("+----+----------------+----------------+----------+------------------------+-----------------+--------+");
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: items.csv file not found");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -60,8 +60,7 @@ public class Inventory {
         try {
             // Read existing items from CSV file and store them in a HashSet
             Set<String> existingItems = new HashSet<>();
-            Path path = Paths.get(System.getProperty("user.home"), "Desktop", "TOFFEE", "project", "src", "data");
-            File file = new File(path.toFile(), "items.csv");
+            File file = new File("./src/data", "items.csv");
             if (file.exists()) {
                 try (Scanner scanner = new Scanner(new File(file.getPath()))) {
                     scanner.nextLine(); // Skip first line containing column headers
