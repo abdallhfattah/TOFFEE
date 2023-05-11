@@ -15,7 +15,8 @@ public class Inventory {
         itemList.add(item);
     }
 
-    public Item getItemByName(String itemName) {
+    public Item getItemByName(String itemName) {    
+        loadItemsFromCSV();
         for (Item item : itemList) {
             if (item.getName().equals(itemName)) {
                 return item;
@@ -25,10 +26,9 @@ public class Inventory {
     }
 
     public void displayItems() {
-        Path path = Paths.get(System.getProperty("user.home"), "Desktop", "TOFFEE", "project", "src", "data");
-        File file = new File(path.toFile(), "items.csv");
-        try (Scanner scanner = new Scanner(new File(file.getPath()))) {
-            BufferedReader reader = new BufferedReader(new FileReader("./src/data/items.csv"));
+        // using d compatable with windows and linux users
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("./data/items.csv"));) {
             reader.readLine(); // Skip first line containing column headers
             System.out.println("+----+----------------+----------------+----------+------------------------+-----------------+--------+");
             System.out.println("| ID |      Name      |    Category    |  Price   |       Description      | Loyalty Points  |In Stock|");
@@ -36,7 +36,6 @@ public class Inventory {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] row = line.split(",");
-
                 int id = Integer.parseInt(row[0]);
                 String name = row[1];
                 String category = row[2];
@@ -60,7 +59,7 @@ public class Inventory {
         try {
             // Read existing items from CSV file and store them in a HashSet
             Set<String> existingItems = new HashSet<>();
-            File file = new File("./src/data", "items.csv");
+            File file = new File("./data", "items.csv");
             if (file.exists()) {
                 try (Scanner scanner = new Scanner(new File(file.getPath()))) {
                     scanner.nextLine(); // Skip first line containing column headers
@@ -74,7 +73,6 @@ public class Inventory {
                     }
                 }
             }
-    
             // Write new items to CSV file
             FileWriter writer = new FileWriter(file.getPath(), true);
             int itemsAdded = 0;
@@ -98,6 +96,34 @@ public class Inventory {
             System.out.println("Error saving items to CSV file: " + e.getMessage());
         }
     }
+
+    public void loadItemsFromCSV() {
+    try {
+        File file = new File("./data", "items.csv");
+        if (file.exists()) {
+            try (Scanner scanner = new Scanner(file)) {
+                scanner.nextLine(); // Skip first line containing column headers
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    Scanner lineScanner = new Scanner(line);
+                    lineScanner.useDelimiter(",");
+                    int id = lineScanner.nextInt();
+                    String name = lineScanner.next();
+                    String category = lineScanner.next();
+                    double price = lineScanner.nextDouble();
+                    String description = lineScanner.next();
+                    int loyaltyPoints = lineScanner.nextInt();
+                    boolean inStock = lineScanner.nextBoolean();
+                    Item item = new Item(id, name, category, price, description, loyaltyPoints, inStock);
+                    itemList.add(item);
+                }
+            }
+        }
+    } catch (IOException e) {
+        System.out.println("Error loading items from CSV file: " + e.getMessage());
+    }
+}
+
     
     public static void main(String[] args) {
         // Create a new inventory
@@ -107,7 +133,7 @@ public class Inventory {
         Item item1 = new Item(1, "Toffe", "sweets", 29.99, "fluffy candy", 10,true);
         Item item2 = new Item(2, "Moltossss", "bakery", 9.99, "just molto ", 5,false);
         Item item3 = new Item(2, "cup cake", "bakery", 14.99, "cup cake", 5,true);
-        Item item4 = new Item(2, "wwala333", "bakery", 4.99, "gums", 0,true);
+        Item item4 = new Item(2, "bomba", "bakery", 4.99, "gums", 0,true);
         inventory.addItem(item1);
         inventory.addItem(item2);
         inventory.addItem(item3);

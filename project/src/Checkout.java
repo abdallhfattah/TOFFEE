@@ -47,12 +47,13 @@ public class Checkout {
         inventory.addItem(item2);
         inventory.addItem(item3);
         inventory.addItem(item4);
-        Cart c = new Cart(inventory);
-        c.addItem("Toffe");
-        c.addItem("Molto");
-        c.addItem("gums");
-        Checkout check = new Checkout(c);
-        check.payCash(44.97);
+        // Cart c = new Cart(inventory);
+        // c.addItem("Toffe");
+        // c.addItem("Molto");
+        // c.addItem("gums");
+        // Checkout check = new Checkout(c);
+        // check.payCash(44.97);
     }
 
 }
+    

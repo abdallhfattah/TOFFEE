@@ -16,6 +16,11 @@ public class User {
     this.Email = email;
   }
 
+  public User(String username, String password) {
+    this.UserName = username;
+    this.Password = password;
+  }
+
   public String getAddress() {
     return Address;
   }

@@ -9,3 +9,4 @@ ID,Name,Category,Price,Description,Loyalty Points,In Stock
 2,M1,bakery,9.99,just molto ,5,false
 2,c1,bakery,14.99,cup cake,5,true
 2,w1,bakery,4.99,gums,0,true
+2,bomba,bakery,4.99,gums,0,true
