@@ -32,15 +32,23 @@ public class system {
             }
         }
         if (!registered) {
-            try {
-                FileWriter writer = new FileWriter("./data/users.csv", true);
-                writer.write(newUser.getUsername() + "," + newUser.getPassword() + "," + newUser.getAddress() + ","
-                        + newUser.getPhoneNumber() + "," + newUser.getGender() + "," + newUser.getEmail() + "\n");
-                writer.close();
-                System.out.println("User registered successfully!");
-            } catch (IOException e) {
-                System.out.println("Error registering user: " + e.getMessage());
+            OTPSender otp = new OTPSender();
+            String otp_verification = otp.sendOTP(phonenumber);
+            String otp_input = scan.nextLine();
+            if (otp_input.equals(otp_verification)) {
+                try {
+                    FileWriter writer = new FileWriter("./data/users.csv", true);
+                    writer.write(newUser.getUsername() + "," + newUser.getPassword() + "," + newUser.getAddress() + ","
+                            + newUser.getPhoneNumber() + "," + newUser.getGender() + "," + newUser.getEmail() + "\n");
+                    writer.close();
+                    System.out.println("User registered successfully!");
+                } catch (IOException e) {
+                    System.out.println("Error registering user: " + e.getMessage());
+                }
+            } else {
+                System.out.println("Wrong OTP, Try again!");
             }
+
         }
     }
 
