@@ -22,24 +22,20 @@ Gradle
 Downloading the source code
 To download the source code of TOFFEE, you can clone the repository from GitHub using the following command:
 
-## installation
-Copy code
-``` git clone  https://github.com/abdallhfattah/TOFFEE.git```
-Building the project
+## Downloading the source code
 Once you have downloaded the source code, you can build the project using Gradle. To build the project, navigate to the root directory of the project and run the following command:
+``` git clone  https://github.com/abdallhfattah/TOFFEE.git```
 
-## building
-Copy code
-./gradlew build
+## Building the project
+```./gradlew build ```
 This will build the project and generate a JAR file that you can use to run the application.
 
-## Usage
-Running the application
+# Usage
+## Running the application
 To run the TOFFEE application, navigate to the root directory of the project and run the following command:
+```java -jar build/libs/toffee.jar```
 
 ## Starting application
-Copy code
-``` java -jar build/libs/toffee.jar```
 This will start the application, and you can access it by opening a web browser and navigating to here http://localhost:8080/ .
 
 ## Configuring the application
