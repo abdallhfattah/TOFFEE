@@ -7,5 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="guicedee.services.jakarta.mail" level="project" />
+    <orderEntry type="library" exported="" name="guicedee.services.javax.activation" level="project" />
   </component>
 </module>

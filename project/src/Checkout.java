@@ -56,15 +56,16 @@ public class Checkout {
                 System.out.println(String.format("Approximate time to delivery: %s ", estimateDeliveryTime(total)));
                 break;
             case 2:
+                Scanner otp_scan = new Scanner(System.in);
                 LineBreaker();
                 String otp_message = OTPSender.generateOTP();
                 OTPSender otp_sender = new OTPSender();
                 otp_sender.sendEmail(user.getEmail(), "Here is your OTP: ", otp_message);
                 System.out.println("Enter the OTP sent to your mail: ");
-                String otp_input = scan.nextLine();
+                String otp_input = otp_scan.nextLine();
                 if (otp_input.equals(otp_message)) {
                     System.out.print("Enter the amount to pay: ");
-                    double amount = scan.nextDouble();
+                    double amount = otp_scan.nextDouble();
                     payCash(amount);
                     if(is_delivered){
                         flushCart();
@@ -104,7 +105,7 @@ public class Checkout {
 
     // deleting items from cart
     public void flushCart(){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./data/cart_For_%s.csv",
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./src/data/cart_For_%s.csv",
         cart_user.getUsername()), false));){
                 writer.write(""); // flush the cart
                 writer.close();

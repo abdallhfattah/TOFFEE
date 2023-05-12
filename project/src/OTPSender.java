@@ -1,3 +1,6 @@
+//import jakarta.mail.*;
+//import jakarta.mail.internet.InternetAddress;
+//import jakarta.mail.internet.MimeMessage;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -12,11 +15,15 @@ public class OTPSender {
         int otp = (int) (Math.random() * 900000) + 100000;
 
         // Convert the number to a string
+        String otpStr = Integer.toString(otp);
+
         // Return the string
-        return Integer.toString(otp);
+        return otpStr;
     }
 
-    public void sendEmail(String to, String subject, String text) {
+    public boolean sendEmail(String to, String subject, String text) {
+        boolean flag = false;
+
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", true);
         properties.put("mail.smtp.starttls.enable", true);
@@ -25,6 +32,7 @@ public class OTPSender {
 
         String username = "omar1752003@gmail.com";
         String password = "yatlowkdcejgoqsb";
+
 
         //session
         Session session = Session.getInstance(properties, new Authenticator() {
@@ -42,10 +50,13 @@ public class OTPSender {
             message.setSubject(subject);
             message.setText(text);
             Transport.send(message);
+            flag = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+
+        return flag;
     }
 
 }
