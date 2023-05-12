@@ -40,7 +40,7 @@ To run the TOFFEE application, navigate to the root directory of the project and
 ## Starting application
 Copy code
 ``` java -jar build/libs/toffee.jar```
-This will start the application, and you can access it by opening a web browser and navigating to here [http://localhost:8080/] .
+This will start the application, and you can access it by opening a web browser and navigating to here http://localhost:8080/ .
 
 ## Configuring the application
 You can configure the TOFFEE application by editing the application.properties file, which is located in the src/main/resources directory. This file contains various configuration settings, such as the server port, database settings, and logging settings.
