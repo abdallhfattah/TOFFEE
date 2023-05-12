@@ -22,13 +22,13 @@ Gradle
 Downloading the source code
 To download the source code of TOFFEE, you can clone the repository from GitHub using the following command:
 
-## bash
+## installation
 Copy code
-git clone https://github.com/abdallhfattah/TOFFEE.git
+``` git clone  https://github.com/abdallhfattah/TOFFEE.git```
 Building the project
 Once you have downloaded the source code, you can build the project using Gradle. To build the project, navigate to the root directory of the project and run the following command:
 
-## bash
+## building
 Copy code
 ./gradlew build
 This will build the project and generate a JAR file that you can use to run the application.
@@ -37,10 +37,10 @@ This will build the project and generate a JAR file that you can use to run the 
 Running the application
 To run the TOFFEE application, navigate to the root directory of the project and run the following command:
 
-## bash
+## Starting application
 Copy code
-java -jar build/libs/toffee.jar
-This will start the application, and you can access it by opening a web browser and navigating to http://localhost:8080/.
+``` java -jar build/libs/toffee.jar```
+This will start the application, and you can access it by opening a web browser and navigating to here [http://localhost:8080/] .
 
 ## Configuring the application
 You can configure the TOFFEE application by editing the application.properties file, which is located in the src/main/resources directory. This file contains various configuration settings, such as the server port, database settings, and logging settings.
