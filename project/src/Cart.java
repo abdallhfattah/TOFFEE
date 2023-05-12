@@ -17,7 +17,7 @@ public class Cart {
         }
 
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./data/cart_For_%s.csv"
+            BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./src/data/cart_For_%s.csv"
                     , user.getUsername()), true));
             for (Item item: items) {
                 writer.write(item.getId() + "," + item.getName() + "," + item.getCategory() + "," + item.getPrice()
@@ -51,7 +51,7 @@ public class Cart {
         LineBreak();
         ArrayList<String> lines = new ArrayList<>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(String.format("./data/cart_For_%s.csv",
+            BufferedReader reader = new BufferedReader(new FileReader(String.format("./src/data/cart_For_%s.csv",
                     user.getUsername())));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -65,7 +65,7 @@ public class Cart {
         }
 
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./data/cart_For_%s.csv",
+            BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("./src/data/cart_For_%s.csv",
                     user.getUsername())));
             for (String l: lines) {
                 if (!l.isEmpty()) {
@@ -100,7 +100,7 @@ public class Cart {
     public ArrayList<Item> loadItemsForUserCSV(User user) {
         ArrayList<Item> user_items = new ArrayList<Item>();
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(String.format("./data/cart_For_%s.csv",
+        try (BufferedReader reader = new BufferedReader(new FileReader(String.format("./src/data/cart_For_%s.csv",
                 user.getUsername() )))) {
                  String line;
                     // scanner.nextLine(); // Skip first line containing column headers
@@ -124,7 +124,7 @@ public class Cart {
         }
     
     public void displayCart(User user) { 
-        try (BufferedReader reader = new BufferedReader(new FileReader(String.format("./data/cart_For_%s.csv",
+        try (BufferedReader reader = new BufferedReader(new FileReader(String.format("./src/data/cart_For_%s.csv",
         user.getUsername() )));) {
             LineBreak();
             System.out.println("\n-----------------------------------------------Your Cart-----------------------------------------------");

@@ -28,7 +28,7 @@ public class Inventory {
     public void displayItems() {
         // using d compatable with windows and linux users
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("./data/items.csv"));) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("./src/data/items.csv"));) {
             reader.readLine(); // Skip first line containing column headers
             System.out.println("+----+----------------+----------------+----------+------------------------+-----------------+--------+");
             System.out.println("| ID |      Name      |    Category    |  Price   |       Description      | Loyalty Points  |In Stock|");
@@ -59,7 +59,7 @@ public class Inventory {
         try {
             // Read existing items from CSV file and store them in a HashSet
             Set<String> existingItems = new HashSet<>();
-            File file = new File("./data", "items.csv");
+            File file = new File("./src/data", "items.csv");
             if (file.exists()) {
                 try (Scanner scanner = new Scanner(new File(file.getPath()))) {
                     scanner.nextLine(); // Skip first line containing column headers
@@ -99,7 +99,7 @@ public class Inventory {
 
     public ArrayList<Item> loadItemsFromCSV() {
     try {
-        File file = new File("./data", "items.csv");
+        File file = new File("./src/data", "items.csv");
         if (file.exists()) {
             try (Scanner scanner = new Scanner(file)) {
                 scanner.nextLine(); // Skip first line containing column headers

@@ -57,18 +57,28 @@ public class Checkout {
                 break;
             case 2:
                 LineBreaker();
-                System.out.print("Enter the amount to pay: ");
-                double amount = scan.nextDouble();
-                payCash(amount);
-                if(is_delivered){
-                    flushCart();
-                    System.out.println("Thank you for shopping with us!");
+                String otp_message = OTPSender.generateOTP();
+                OTPSender otp_sender = new OTPSender();
+                otp_sender.sendEmail(user.getEmail(), "Here is your OTP: ", otp_message);
+                System.out.println("Enter the OTP sent to your mail: ");
+                String otp_input = scan.nextLine();
+                if (otp_input.equals(otp_message)) {
+                    System.out.print("Enter the amount to pay: ");
+                    double amount = scan.nextDouble();
+                    payCash(amount);
+                    if(is_delivered){
+                        flushCart();
+                        System.out.println("Thank you for shopping with us!");
+                        return;
+                    }
+                } else {
+                    System.out.println("wrong otp, Try again!");
+                    break;
                 }
-                return;
             case 3:
                 return;
             default:
-                System.out.println("Invalid choice. Please be smarter.");
+                System.out.println("Invalid choice.");
                 break;
         }
     }

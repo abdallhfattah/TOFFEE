@@ -1,3 +1,5 @@
+import javax.crypto.spec.OAEPParameterSpec;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
@@ -10,17 +12,20 @@ public class system {
     public static void Register() {
         boolean registered = false;
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter username:");
+        System.out.println("(you shouldn't enter spaces or any special character except(_))");
+        System.out.print("Enter username : ");
         String username = scan.nextLine();
-        System.out.println("Enter password:");
+        System.out.println(
+                "Enter password (enter exactly between 8-12 characters at least one uppercase , one digit and one symbol):");
         String password = scan.nextLine();
-        System.out.println("Enter address:");
+        System.out.print("Enter address: ");
         String address = scan.nextLine();
-        System.out.println("Enter phonenumber:");
+        System.out
+                .println("Enter phonenumber (enter valid egyptian phonenumber starts with 010 or 011 or 012 or 015):");
         String phonenumber = scan.nextLine();
-        System.out.println("Enter gender:");
+        System.out.print("Enter gender(male or female): ");
         String gender = scan.nextLine();
-        System.out.println("Enter email:");
+        System.out.print("Enter email: ");
         String email = scan.nextLine();
         User newUser = new User(username, password, address, phonenumber, gender, email);
         ArrayList<User> users = loadUsers();
@@ -30,14 +35,38 @@ public class system {
                 System.out.println("UserName already exists!");
                 break;
             }
+            if (!username.matches("^[a-zA-Z0-9_]*$")) {
+                System.out
+                        .println("Invalid username (you shouldn't enter spaces or any special character except(_))\n");
+                return;
+            }
+            if (!password.matches("^(?=.*[A-Z])(?=.*\\d)(?=.*\\W)[A-Za-z\\d\\W]{8,12}$")) {
+                System.out.println(
+                        "Invalid password(enter exactly between 8-12 characters at least one uppercase , one digit and one symbol)\n");
+                return;
+            }
+            if (!phonenumber.matches("^01[0-2|5][0-9]{8}$")) {
+                System.out.println("Invalid phonenumber(enter valid egyptian phone number)\n");
+                return;
+            }
+            if (!gender.matches("^(male|female)$")) {
+                System.out.println("Invalid gender(enter male or female)\n");
+                return;
+            }
+            if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+                System.out.println("Invalid email(enter valid email)\n");
+                return;
+            }
         }
         if (!registered) {
-            OTPSender otp = new OTPSender();
-            String otp_verification = otp.sendOTP(phonenumber);
+            String otp_message = OTPSender.generateOTP();
+            OTPSender otp_sender = new OTPSender();
+            otp_sender.sendEmail(email, "Here is your OTP Message: ", otp_message);
+            System.out.println("Enter the OTP sent to your mail: ");
             String otp_input = scan.nextLine();
-            if (otp_input.equals(otp_verification)) {
+            if (otp_input.equals(otp_message)) {
                 try {
-                    FileWriter writer = new FileWriter("./data/users.csv", true);
+                    FileWriter writer = new FileWriter("./src/data/users.csv", true);
                     writer.write(newUser.getUsername() + "," + newUser.getPassword() + "," + newUser.getAddress() + ","
                             + newUser.getPhoneNumber() + "," + newUser.getGender() + "," + newUser.getEmail() + "\n");
                     writer.close();
@@ -80,7 +109,7 @@ public class system {
     public static ArrayList<User> loadUsers() {
         ArrayList<User> users = new ArrayList<>();
         try {
-            Scanner scan = new Scanner(new File("data/users.csv"));
+            Scanner scan = new Scanner(new File("./src/data/users.csv"));
             while (scan.hasNextLine()) {
                 String line = scan.nextLine();
                 String[] fields = line.split(",");

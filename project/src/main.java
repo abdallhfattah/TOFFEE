@@ -3,7 +3,6 @@ public class main {
   public static void main(String[] args) {
     Scanner scan_choice = new Scanner(System.in);
     Inventory n = new Inventory();
-    n.displayItems();
     while (true) {
       System.out.println("What would you like to do?");
       System.out.println("1. Register");
