@@ -1,3 +1,5 @@
+package System;
+import User.*;
 import javax.crypto.spec.OAEPParameterSpec;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -6,7 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-public class system {
+public class system_manager {
 
     // register manager
     public static void Register() {

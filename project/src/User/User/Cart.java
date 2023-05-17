@@ -1,9 +1,13 @@
+package User;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import System.Inventory;
+import System.Item;
 
 public class Cart {
     private User user;

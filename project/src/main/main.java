@@ -1,4 +1,7 @@
+package main;
 import java.util.Scanner;
+
+import System.system_manager;
 public class main {
   public static void main(String[] args) {
     Scanner scan_choice = new Scanner(System.in);
@@ -12,11 +15,11 @@ public class main {
       int choice = scan_choice.nextInt();
       switch (choice) {
         case 1:
-          system.Register();
+          system_manager.Register();
           break;
         case 2:
         // #TODO display list of possibilities user can do
-          system.login();
+          system_manager.login();
           break;
         case 3:
           System.out.println("quitting ...");
